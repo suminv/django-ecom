@@ -1,0 +1,16 @@
+.idea/
+**/migrations
+*.DS_Store
+**/__pycache__
+**/.DS_Store
+venv/
+.env
+db.sqlite3
+media/
+.vscode/
+.pylintrc
+static/
+ 
+
+
+
