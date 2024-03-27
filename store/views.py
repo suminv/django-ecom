@@ -1,8 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .forms import SignUpForm
-from .models import Product
+from .models import Product, Category
 
 
 def home(request):
@@ -46,15 +46,24 @@ def register_user(request):
             password = form.cleaned_data["password1"]
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, f"Registration successful. {request.user.username} are now logged in.")
+            messages.success(
+                request,
+                f"Registration successful. {request.user.username} are now logged in.",
+            )
             return redirect("home")
         else:
             messages.error(request, "Invalid username or password")
             return redirect("register")
     else:
         return render(request, "store/register.html", {"form": form})
-    
 
-def product_detail(request, pk):
-    product = Product.objects.get(id=pk)
+
+def product_detail(request, slug):
+    product = Product.objects.get(slug=slug)
     return render(request, "store/product_detail.html", {"product": product})
+
+
+def category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    products = Product.objects.filter(category=category)
+    return render(request, "store/category.html", {"products": products, "category": category})

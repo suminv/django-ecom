@@ -1,0 +1,170 @@
+[
+  {
+    "model": "store.product",
+    "pk": 1,
+    "fields": {
+      "category": 1,
+      "name": "How Computers Really Work",
+      "slug": "how-computers-really-work",
+      "price": "30.00",
+      "description": "An approachable, hands-on guide to understanding how computers work, from low-level circuits to high-level code.\r\n\r\nHow Computers Really Work is a hands-on guide to the computing ecosystem: everything from circuits to memory and clock signals, machine code, programming languages, operating systems, and the internet.",
+      "image": "upload/product/image_default.jpeg",
+      "is_sale": false,
+      "sale_price": "0.00"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 2,
+    "fields": {
+      "category": 1,
+      "name": "Grokking Algorithms",
+      "slug": "grokking-algorithms",
+      "price": "65.00",
+      "description": "English edition  by Aditya Bhargava (auteur)\r\nSee all formats and editions\r\nA friendly, fully-illustrated introduction to the most important computer programming algorithms.\r\nMaster the most widely used algorithms and be fully prepared when you're asked about them at your next job interview. With beautifully simple explanations, over 400 fun illustrations, and dozens of relevant examples, you'll actually enjoy learning about algorithms with this fun and friendly guide!",
+      "image": "upload/product/image_default_RTi2Iv2.jpeg",
+      "is_sale": true,
+      "sale_price": "39.99"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 3,
+    "fields": {
+      "category": 1,
+      "name": "Software Architecture",
+      "slug": "software-architecture",
+      "price": "99.99",
+      "description": "There are no easy decisions in software architecture. Instead, there are many hard parts--difficult problems or issues with no best practices--that force you to choose among various compromises. With this book, you'll learn how to think critically about the trade-offs involved with distributed architectures.",
+      "image": "upload/product/image_default_JQ4sQ4C.jpeg",
+      "is_sale": false,
+      "sale_price": "0.00"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 4,
+    "fields": {
+      "category": 2,
+      "name": "Apple iPhone 15 Pro Max",
+      "slug": "apple-iphone-15-pro-max",
+      "price": "1399.00",
+      "description": "FORGED FROM TITANIUM – iPhone 15 Pro Max features a strong and lightweight design made of high-quality titanium with a textured frosted glass back. The front features Ceramic Shield, which is stronger than any smartphone glass. And it is splash, water and dust resistant.\r\nDISCLAIMERS – This is an overview of the most important product features. Check below for more information.",
+      "image": "upload/product/image_default_Jg1S3Ut.jpeg",
+      "is_sale": true,
+      "sale_price": "1299.00"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 5,
+    "fields": {
+      "category": 2,
+      "name": "Samsung GALAXY S24 Ultra",
+      "slug": "samsung-galaxy-s24-ultra",
+      "price": "1500.00",
+      "description": "Type: Smartphone\r\n- 2G Network: GSM 850 / 900 / 1800 / 1900 - SIM 1 & SIM 2 (Dual SIM model only)\r\n- 3G Network: HSDPA 850 / 900 / 1700(AWS) / 1900 / 2100\r\n- 4G Network: 1, 2, 3, 4, 5, 7, 8, 12, 13, 17, 18, 19, 20, 25, 26, 28, 32, 38, 39, 40, 41, 66\r\n- 5G Network: 1, 2, 3, 5, 7, 8, 12, 20, 25, 26, 28, 38, 40, 41, 66, 75, 77, 78 SA/NSA/Sub6",
+      "image": "upload/product/image_default_RI4OO5o.jpeg",
+      "is_sale": false,
+      "sale_price": "0.00"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 6,
+    "fields": {
+      "category": 3,
+      "name": "Dell SE2422HX 24\"",
+      "slug": "dell-se2422hx-24",
+      "price": "89.00",
+      "description": "More screen space (24\" Monitor): The slim bezels do not distract from what you see on the screen, thanks to a higher screen-to-monitor ratio.\r\nRobust and compact: Enjoy more workspace and a larger desktop with this small footprint monitor, including a 23% smaller stand\r\nCustomizable to your needs: Tilt the monitor quickly and easily for just the right viewing angle, or attach the monitor to the compatible VESA system\r\nMore viewing comfort: Minimize the radiation of harmful blue light",
+      "image": "upload/product/image_default_TKMEobf.jpeg",
+      "is_sale": true,
+      "sale_price": "56.45"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 7,
+    "fields": {
+      "category": 3,
+      "name": "MSI MP2412 - 23.8''",
+      "slug": "msi-mp2412-238",
+      "price": "199.00",
+      "description": "4711377087957\r\nPROMP2412",
+      "image": "upload/product/image_default_jFnlTaD.jpeg",
+      "is_sale": false,
+      "sale_price": "0.00"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 8,
+    "fields": {
+      "category": 4,
+      "name": "LENOVO IdeaPad 1 15IGL7",
+      "slug": "lenovo-ideapad-1-15igl7",
+      "price": "999.00",
+      "description": "15.6 inch fullHD, 1920 x 1080 pixels, TN, 220 nits, anti-glare\r\nIntel Celeron N4020 (2C / 2T, 1.1 / 2.8GHz, 4MB)\r\n4GB RAM, 128GB SSD\r\nMemory: 128 GB SSD\r\nIntegrated Graphics Intel UHD Graphics",
+      "image": "upload/product/image_default_J2Pxlbx.jpeg",
+      "is_sale": true,
+      "sale_price": "1999.99"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 9,
+    "fields": {
+      "category": 4,
+      "name": "ACEMAGIC Laptop",
+      "slug": "acemagic-laptop",
+      "price": "349.00",
+      "description": "Perfect portability: The ACEMAGIC AX16 laptop is a true Road Warrior, which has a slim and lightweight design with dimensions of only 350 x 220 x 16 mm and a weight of only 1.5 kg. This laptop's smart flat hinge allows you to share content or collaborate with friends. The metal housing ensures durability while adding an elegant touch. MSDUQTIZXRUITAIDJEDJEO",
+      "image": "upload/product/image_default_eng2cZ3.jpeg",
+      "is_sale": false,
+      "sale_price": "299.00"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 10,
+    "fields": {
+      "category": 5,
+      "name": "Logitech K120",
+      "slug": "logitech-k120",
+      "price": "30.00",
+      "description": "Virtually quiet, low-profile keys\r\nIndustrial standard layout with full-size F-keys and numeric keypad\r\nSlim, thin profile keyboard with spill-resistant design\r\nPlug-and-play USB connection\r\nBold, bright white letters",
+      "image": "upload/product/image_default_0ImmYiR.jpeg",
+      "is_sale": true,
+      "sale_price": "25.99"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 11,
+    "fields": {
+      "category": 5,
+      "name": "Razer Ornata V3",
+      "slug": "razer-ornata-v3",
+      "price": "199.00",
+      "description": "Low Keys: Thinner keycaps and shorter switches put your hand in a natural position, so you can play for hours without much stress.\r\nRazer silent membrane switches: The Razer Ornata V3 X is ideal for those who want to be able to play or type quieter and with more comfort.",
+      "image": "upload/product/image_default_Y5Afopv.jpeg",
+      "is_sale": false,
+      "sale_price": "0.00"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 12,
+    "fields": {
+      "category": 1,
+      "name": "MAGIC-REFINER RK68 Wireless Keyboard",
+      "slug": "magic-refiner-rk68-wireless-keyboard",
+      "price": "120.00",
+      "description": "Dual-mode 2.4Ghz & Bluetooth 5.0】This wireless keyboard is equipped with an improved wireless Bluetooth chip, the stable and low latency connection offers you a truly wireless experience. Unlike wired mechanical keyboards, you can connect up to three wireless devices simultaneously, Fn+Q switches to wireless 2.4G mode, Fn+W/E switches to Bluetooth mode, and can store up to two Bluetooth devices.",
+      "image": "upload/product/image_default_LRpqCrR.jpeg",
+      "is_sale": false,
+      "sale_price": "0.00"
+    }
+  }
+]

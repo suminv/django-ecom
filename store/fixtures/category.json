@@ -1,0 +1,42 @@
+[
+    {
+        "model": "store.category",
+        "pk": 1,
+        "fields": {
+            "name": "Computer books",
+            "slug": "computer-books"
+        }
+    },
+    {
+        "model": "store.category",
+        "pk": 2,
+        "fields": {
+            "name": "Cell phone",
+            "slug": "cell-phone"
+        }
+    },
+    {
+        "model": "store.category",
+        "pk": 3,
+        "fields": {
+            "name": "Monitors",
+            "slug": "monitors"
+        }
+    },
+    {
+        "model": "store.category",
+        "pk": 4,
+        "fields": {
+            "name": "Laptop",
+            "slug": "laptop"
+        }
+    },
+    {
+        "model": "store.category",
+        "pk": 5,
+        "fields": {
+            "name": "Mechanic keyboards",
+            "slug": "mechanic-keyboards"
+        }
+    }
+]
