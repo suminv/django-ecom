@@ -1,10 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
-from django import forms
 from .models import Product
 
 
@@ -49,7 +46,7 @@ def register_user(request):
             password = form.cleaned_data["password1"]
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, "Registration Successfully")
+            messages.success(request, f"Registration successful. {request.user.username} are now logged in.")
             return redirect("home")
         else:
             messages.error(request, "Invalid username or password")
@@ -57,3 +54,7 @@ def register_user(request):
     else:
         return render(request, "store/register.html", {"form": form})
     
+
+def product_detail(request, pk):
+    product = Product.objects.get(id=pk)
+    return render(request, "store/product_detail.html", {"product": product})

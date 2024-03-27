@@ -1,0 +1,47 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+<!-- Header-->
+
+
+<div class="container">
+    <div class="row">
+        <center>
+            <div class="col-8">
+                <p align="justify">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{product.image.url}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            
+
+                          <h5 class="card-title">{{product.name}}</h5>
+                          {% if product.is_sale %}
+                            <div class="badge bg-light text-black position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                          <!-- Stars showing-->
+                          <div class="d-flex justify-content-center small text-warning mb-2">
+                            <div class="bi-star-fill"></div>
+                            &nbsp;&nbsp;Sale!&nbsp;&nbsp;                                
+                            <div class="bi-star-fill"></div>
+                            
+                        </div>
+                          <strike>€{{product.price}}</strike>
+                                            &nbsp;
+                                            €{{product.sale_price}}      
+
+
+                          {%else%}
+                          <h5 class="card-title">€{{product.price}}</h5>
+                          {% endif %}
+                          <p class="card-text">{{product.description}}</p>
+                          <a href="#" class="btn btn-primary">Add to Cart</a>
+                        </div>
+                      </div>
+                </p>
+            </div>
+            
+        </center>
+    </div>
+
+</div>
+
+{% endblock content %}

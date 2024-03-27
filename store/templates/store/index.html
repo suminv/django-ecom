@@ -32,8 +32,9 @@
                                             <!-- Stars showing-->
                                             <div class="d-flex justify-content-center small text-warning mb-2">
                                                 <div class="bi-star-fill"></div>
+                                                &nbsp;&nbsp;Sale!&nbsp;&nbsp;
                                                 <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
+                                                
                                             </div>
                                             <!-- Product price-->
                                             <strike>€{{product.price}}</strike>
@@ -43,7 +44,7 @@
                                     </div>
                                     <!-- Product actions-->
                                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product_detail' product.id %}">View details</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +64,7 @@
                                     </div>
                                     <!-- Product actions-->
                                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product_detail' product.id %}">View details</a></div>
                                     </div>
                                 </div>
                             </div>  
