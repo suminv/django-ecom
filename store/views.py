@@ -1,7 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
-
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from .forms import SignUpForm
+from django import forms
 from .models import Product
 
 
@@ -34,3 +37,23 @@ def logout_user(request):
     logout(request)
     messages.success(request, "Logout Successfully")
     return redirect("home")
+
+
+def register_user(request):
+    form = SignUpForm()
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password1"]
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, "Registration Successfully")
+            return redirect("home")
+        else:
+            messages.error(request, "Invalid username or password")
+            return redirect("register")
+    else:
+        return render(request, "store/register.html", {"form": form})
+    
