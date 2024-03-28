@@ -15,16 +15,17 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
                 {% endif %}
-                
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">All Products</a></li>
+                        <li><a class="dropdown-item" href="{% url 'home' %}">All Products</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                        {% for category in categories %}
+                            <li><a class="dropdown-item" href="{% url 'category_products' category.slug %}"> {{ category.name }}</a></li>
+                        {% endfor %}
                     </ul>
                 </li>
+                
             </ul>
         
             <form class="d-flex">
