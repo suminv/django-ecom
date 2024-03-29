@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
-{% block content %}
-<!-- Header-->
 
+{% block content %}
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
 
 <div class="container">
     <div class="row">
@@ -31,9 +35,12 @@
 
                           {%else%}
                           <h5 class="card-title">€{{product.price}}</h5>
+                          
                           {% endif %}
                           <p class="card-text">{{product.description}}</p>
-                          <a href="#" class="btn btn-primary">Add to Cart</a>
+                          <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+                          <button type="button" value="{{product.id}}" class="btn btn-secondary" id="add-cart">Add to cart</button>
+                          
                         </div>
                       </div>
                 </p>
@@ -43,5 +50,31 @@
     </div>
 
 </div>
+
+<script>
+    $(document).on('click', '#add-cart', function(e) {
+        e.preventDefault();
+        var productId = $(this).val();  // Get product ID from button value
+        $.ajax({
+            type: "POST",
+            url: '{% url 'cart_add' %}',
+            data: {
+                product_id: productId,  // Pass product ID directly
+                action: 'post',
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (json) {
+                console.log(json);
+                // Handle success if needed
+            },
+            error: function (xhr, errmsg, err) {
+                console.error(xhr.status + ": " + xhr.responseText);  // Log error
+                // Handle errors if needed
+            }
+        });
+    });
+</script>
+
+
 
 {% endblock content %}
