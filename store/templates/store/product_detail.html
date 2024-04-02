@@ -37,10 +37,25 @@
                           <h5 class="card-title">€{{product.price}}</h5>
                           
                           {% endif %}
+                          
+
                           <p class="card-text">{{product.description}}</p>
+                          <br>
+                          <div class="row justify-content-center">
+                            <div class="col-md-6">Quantity:</div>
+                                <div class="col-md-4">
+                          <select class="form-select form-select-sm" id="qty-cart">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                         </select>
+                            </div>
+                        </div>
+                      <br> 
                           <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
                           <button type="button" value="{{product.id}}" class="btn btn-secondary" id="add-cart">Add to cart</button>
-                          
                         </div>
                       </div>
                 </p>
@@ -53,19 +68,22 @@
 
 <script>
     $(document).on('click', '#add-cart', function(e) {
+
         e.preventDefault();
         var productId = $(this).val();  // Get product ID from button value
+
         $.ajax({
             type: "POST",
             url: '{% url 'cart_add' %}',
             data: {
-                product_id: productId,  // Pass product ID directly
+                product_id: productId,
+                product_qty: $('#qty-cart option:selected').text(),  
                 action: 'post',
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function (json) {
-                console.log(json);
-                // Handle success if needed
+                // Update cart quantity in the navbar
+                $('#cart-quantity').text(json.cart_quantity);
             },
             error: function (xhr, errmsg, err) {
                 console.error(xhr.status + ": " + xhr.responseText);  // Log error
