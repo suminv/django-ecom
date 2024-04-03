@@ -83,7 +83,8 @@
             },
             success: function (json) {
                 // Update cart quantity in the navbar
-                $('#cart-quantity').text(json.cart_quantity);
+                location.reload();
+                // $('#cart-quantity').text(json.cart_quantity);
             },
             error: function (xhr, errmsg, err) {
                 console.error(xhr.status + ": " + xhr.responseText);  // Log error

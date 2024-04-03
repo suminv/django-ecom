@@ -43,8 +43,7 @@
                             <div class="row justify-content-left">
                                 <div class="col-md-6">Quantity:</div>
                                 <div class="col-md-4">
-                                    <select class="form-select form-select-sm" id="qty-cart">
-                                        
+                                    <select class="form-select form-select-sm" id="select{{product.id}}">
                                             {% for key, value in quantities.items %}
                                                 {% if key == product.id|slugify %}
                                                 <option selected>{{value}}</option>
@@ -61,6 +60,7 @@
                             <br>
                             <p class="card-text">{{product.description}}</p>
                             <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+                            <button type="button" data-index="{{product.id}}" class="btn btn-secondary update-cart">Update</button>
                         </div>
                     </div>
                 </div>
@@ -74,4 +74,39 @@
         {% endif %}
     </div>
     
+
+<script>
+    $(document).on('click', '.update-cart', function(e) {
+        e.preventDefault();
+        
+        // Grab the product id
+        var productid = $(this).data('index');
+        
+        // Get the selected quantity
+        var selectedQty = $('#select' + productid + ' option:selected').text();
+
+        // Send AJAX request to update the cart
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_update' %}',
+            data: {
+                product_id: productid,
+                product_qty: selectedQty,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json) {
+                // Reload the page or update the UI as needed
+                location.reload();
+                // $('#select' + productid).val(json.qty)
+            },
+            error: function(xhr, errmsg, err) {
+                console.error(xhr.status + ": " + xhr.responseText);
+                alert("Failed to update cart. Please try again.");
+            }
+        });
+    });
+</script>
+
+
 {% endblock content %}
