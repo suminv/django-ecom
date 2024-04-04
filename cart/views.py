@@ -46,7 +46,14 @@ def cart_add(request):
 
 
 def cart_delete(request):
-    return render(request, "cart/cart_delete.html")
+    cart = Cart(request)
+    if request.POST.get('action') == 'post':
+        product_id = int(request.POST.get('product_id'))
+        cart.delete(product=product_id)
+        response = JsonResponse({'product': product_id})
+        messages.success(request, ("Product was removed from your cart!"))
+        return response
+        
 
 
 def cart_update(request):
@@ -59,6 +66,5 @@ def cart_update(request):
         cart.update(product=product_id, quantity=product_qty)
 
         response = JsonResponse({'qty':product_qty})
-        #return redirect('cart_summary')
         messages.success(request, ("Your Cart Has Been Updated..."))
         return response

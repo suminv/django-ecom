@@ -61,6 +61,8 @@
                             <p class="card-text">{{product.description}}</p>
                             <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
                             <button type="button" data-index="{{product.id}}" class="btn btn-secondary update-cart">Update</button>
+
+                          <button type="button" data-index="{{product.id}}"  class="btn btn-danger delete-product" >Remove</button>
                         </div>
                     </div>
                 </div>
@@ -76,6 +78,7 @@
     
 
 <script>
+    // Update cart quantity
     $(document).on('click', '.update-cart', function(e) {
         e.preventDefault();
         
@@ -106,6 +109,36 @@
             }
         });
     });
+
+// Delete item from
+$(document).on('click', '.delete-product', function(e) {
+    e.preventDefault();
+    
+    
+
+    // Send AJAX request to update the cart
+    $.ajax({
+        type: 'POST',
+        url: '{% url 'cart_delete' %}',
+        data: {
+            product_id: $(this).data('index'),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+        },
+        success: function(json) {
+            // Reload the page or update the UI as needed
+            location.reload();
+
+        },
+        error: function(xhr, errmsg, err) {
+            console.error(xhr.status + ": " + xhr.responseText);
+            alert("Failed to delete item from cart. Please try again.");
+        }
+    });
+});
+
+
+
 </script>
 
 
