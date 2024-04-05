@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 
 from store.models import Product
 
@@ -49,24 +49,23 @@ def cart_add(request):
 
 def cart_delete(request):
     cart = Cart(request)
-    if request.POST.get('action') == 'post':
-        product_id = int(request.POST.get('product_id'))
+    if request.POST.get("action") == "post":
+        product_id = int(request.POST.get("product_id"))
         cart.delete(product=product_id)
-        response = JsonResponse({'product': product_id})
+        response = JsonResponse({"product": product_id})
         messages.success(request, ("Product was removed from your cart!"))
         return response
-        
 
 
 def cart_update(request):
     cart = Cart(request)
-    if request.POST.get('action') == 'post':
+    if request.POST.get("action") == "post":
         # Get stuff
-        product_id = int(request.POST.get('product_id'))
-        product_qty = int(request.POST.get('product_qty'))
+        product_id = int(request.POST.get("product_id"))
+        product_qty = int(request.POST.get("product_qty"))
 
         cart.update(product=product_id, quantity=product_qty)
 
-        response = JsonResponse({'qty':product_qty})
+        response = JsonResponse({"qty": product_qty})
         messages.success(request, ("Your Cart Has Been Updated..."))
         return response
