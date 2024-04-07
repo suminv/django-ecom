@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import SignUpForm, UpdateUserForm
+from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm
 from .models import Category, Product
 
 
@@ -52,7 +52,7 @@ def register_user(request):
                 request,
                 f"Registration successful. {request.user.username} are now logged in.",
             )
-            return redirect("home")
+            return redirect("home") 
         else:
             messages.error(request, "Invalid username or password")
             return redirect("register")
@@ -79,6 +79,21 @@ def update_user(request):
         return redirect("home")
 
 
+
+def update_password(request):
+    if request.method == "POST":
+        form = ChangePasswordForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Password updated successfully")
+            login(request, request.user)
+            return redirect("update_user")
+        else:
+            for error in list(form.errors.values()):
+                messages.error(request, error)
+    else:
+        form = ChangePasswordForm(request.user)
+    return render(request, "store/update_password.html", {"form": form})
 
 
 
