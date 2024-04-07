@@ -1,8 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
-from .forms import SignUpForm
-from .models import Product, Category
+
+from .forms import SignUpForm, UpdateUserForm
+from .models import Category, Product
 
 
 def home(request):
@@ -56,6 +58,29 @@ def register_user(request):
             return redirect("register")
     else:
         return render(request, "store/register.html", {"form": form})
+
+
+
+def update_user(request):
+    if request.user.is_authenticated:
+        # Get the current user
+        current_user = User.objects.get(id=request.user.id)
+        # Check if the POST request and fill data in current_user_form to update
+        user_form = UpdateUserForm(request.POST or None, instance=current_user)
+
+        if user_form.is_valid():
+            user_form.save()
+            login(request, current_user)
+            messages.success(request, "Profile updated successfully")
+            return redirect("home")
+        return render(request, "store/update_user.html", {"user_form": user_form})
+    else:
+        messages.error(request, "You must be logged in to view this page")
+        return redirect("home")
+
+
+
+
 
 
 def product_detail(request, slug):
