@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm
-from .models import Category, Product
+from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoForm
+from .models import Category, Product, Profile
 
 
 def home(request):
@@ -50,15 +50,14 @@ def register_user(request):
             login(request, user)
             messages.success(
                 request,
-                f"Registration successful. {request.user.username} are now logged in.",
+                f"Registration successful. {request.user.username} are now logged in. Please update your information.",
             )
-            return redirect("home") 
+            return redirect("update_info")
         else:
             messages.error(request, "Invalid username or password")
             return redirect("register")
     else:
         return render(request, "store/register.html", {"form": form})
-
 
 
 def update_user(request):
@@ -79,7 +78,6 @@ def update_user(request):
         return redirect("home")
 
 
-
 def update_password(request):
     if request.method == "POST":
         form = ChangePasswordForm(request.user, request.POST)
@@ -97,6 +95,20 @@ def update_password(request):
 
 
 
+
+def update_info(request):
+    if request.user.is_authenticated:
+        current_user = Profile.objects.get(user__id=request.user.id)
+        form = UserInfoForm(request.POST or None, instance=current_user)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "You information updated successfully")
+            return redirect("home")
+        return render(request, "store/update_info.html", {"form": form})
+    else:
+        messages.error(request, "You must be logged in to view this page")
+        return redirect("home")
 
 def product_detail(request, slug):
     product = Product.objects.get(slug=slug)

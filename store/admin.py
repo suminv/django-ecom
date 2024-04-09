@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import Category, Product, Customer, Order
+from .models import Category, Product, Customer, Order, Profile
+from django.contrib.auth.models import User
+
+
 
 
 
@@ -14,3 +17,20 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Customer)
 admin.site.register(Order)
+admin.site.register(Profile)
+
+class ProfileInline(admin.StackedInline):
+    # Mix profile info and user infomation
+    model = Profile
+
+class UserAdmin(admin.ModelAdmin):
+    # Extend User Model
+    model = User
+    fields = ['username', 'first_name', 'last_name', 'email']
+    inlines = [ProfileInline]
+
+# Unregister the old way
+admin.site.unregister(User)
+
+# Re - register the new way
+admin.site.register(User, UserAdmin)

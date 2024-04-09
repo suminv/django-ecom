@@ -2,13 +2,58 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
 from django.contrib.auth.models import User
 
+from store.models import Profile
+
+
+class UserInfoForm(forms.ModelForm):
+    phone = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Phone"}),
+        required=False,
+    )
+    address1 = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Address1"}
+        ),
+        required=False,
+    )
+    address2 = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Address2"}
+        ),
+        required=False,
+    )
+    city = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "City"}),
+        required=False,
+    )
+    zipcode = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Zipcode"}
+        ),
+        required=False,
+    )
+    country = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Country"}
+        ),
+        required=False,
+    )
+
+    class Meta:
+        model = Profile
+        fields = ["phone", "address1", "address2", "city", "zipcode", "country"]
+
 
 class ChangePasswordForm(SetPasswordForm):
     class Meta:
         model = User()
         fields = ["new_password1", "new_password2"]
-
-
 
     def __init__(self, *args, **kwargs):
         super(ChangePasswordForm, self).__init__(*args, **kwargs)
@@ -37,6 +82,7 @@ class UpdateUserForm(UserChangeForm):
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Email Address"}
         ),
+        required=False,
     )
     first_name = forms.CharField(
         label="",
@@ -44,6 +90,7 @@ class UpdateUserForm(UserChangeForm):
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "First Name"}
         ),
+        required=False,
     )
     last_name = forms.CharField(
         label="",
@@ -51,6 +98,7 @@ class UpdateUserForm(UserChangeForm):
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Last Name"}
         ),
+        required=False,
     )
 
     class Meta:
