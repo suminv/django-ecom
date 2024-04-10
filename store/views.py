@@ -1,9 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoForm
+from .forms import ChangePasswordForm, SignUpForm, UpdateUserForm, UserInfoForm
 from .models import Category, Product, Profile
 
 
@@ -94,8 +95,6 @@ def update_password(request):
     return render(request, "store/update_password.html", {"form": form})
 
 
-
-
 def update_info(request):
     if request.user.is_authenticated:
         current_user = Profile.objects.get(user__id=request.user.id)
@@ -110,6 +109,7 @@ def update_info(request):
         messages.error(request, "You must be logged in to view this page")
         return redirect("home")
 
+
 def product_detail(request, slug):
     product = Product.objects.get(slug=slug)
     return render(request, "store/product_detail.html", {"product": product})
@@ -123,3 +123,21 @@ def category_products(request, slug):
         "store/category_products.html",
         {"category": category, "products": products},
     )
+
+
+def search(request):
+    # Determine if they filled out the form
+    if request.method == "POST":
+        searched = request.POST["searched"]
+        # get sql search in Product table by name
+        searched = Product.objects.filter(
+            Q(name__icontains=searched) | Q(description__icontains=searched)
+        )
+        # Check for null
+        if not searched:
+            messages.error(request, "No products found")
+            return render(request, "store/search.html", {})
+        else:
+            return render(request, "store/search.html", {"searched": searched})
+    else:
+        return render(request, "store/search.html", {})

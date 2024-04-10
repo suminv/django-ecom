@@ -13,5 +13,6 @@ urlpatterns = [
     path("update_password/", views.update_password, name="update_password"),
     path("product/<slug:slug>/", views.product_detail, name="product_detail"),
     path("category/<slug:slug>/products/", views.category_products, name="category_products"),
+    path("search/", views.search, name="search"),
 
 ]
