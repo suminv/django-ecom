@@ -1,3 +1,4 @@
+import json
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -6,7 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ChangePasswordForm, SignUpForm, UpdateUserForm, UserInfoForm
 from .models import Category, Product, Profile
-
+from cart.cart import Cart
 
 def home(request):
     products = Product.objects.all()
@@ -24,6 +25,22 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+
+            # Do some shoping cart stuff
+            current_user = Profile.objects.get(user__id=request.user.id)
+            # Get their saves cart from database
+            saved_cart = current_user.old_cart
+            # Convert database string to python dictionary
+            if saved_cart:
+                # convert to dict usint json.loads
+                convert_data = json.loads(saved_cart)
+                # add the loaded cart dictionary to session
+                cart = Cart(request)
+                # Loop thru the cart and add the items from the database
+                for key, value in convert_data.items():
+                    cart.db_add(product=key, quantity=value)
+
+
             messages.success(request, "Login Successfully")
             return redirect("home")
         else:
