@@ -7,6 +7,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ChangePasswordForm, SignUpForm, UpdateUserForm, UserInfoForm
 from .models import Category, Product, Profile
+from payment.models import ShipppingAddres
+from payment.forms import ShippingForm
+
+
 from cart.cart import Cart
 
 def home(request):
@@ -115,13 +119,16 @@ def update_password(request):
 def update_info(request):
     if request.user.is_authenticated:
         current_user = Profile.objects.get(user__id=request.user.id)
+        shipping_user = ShipppingAddres.objects.get(user__id=request.user.id)
         form = UserInfoForm(request.POST or None, instance=current_user)
+        shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
 
-        if form.is_valid():
+        if form.is_valid() or shipping_form.is_valid():
             form.save()
+            shipping_form.save()
             messages.success(request, "You information updated successfully")
             return redirect("home")
-        return render(request, "store/update_info.html", {"form": form})
+        return render(request, "store/update_info.html", {"form": form, "shipping_form": shipping_form})
     else:
         messages.error(request, "You must be logged in to view this page")
         return redirect("home")
