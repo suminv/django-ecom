@@ -71,11 +71,16 @@
         {% endfor %}
         <div class="row justify-content-center mt-5">
             <div class="col-md-8 mb-4">
-                <div class="card">
+        <div align="right">
+                
             <h3 >Total: {{totals}} €</h3>
+            <a href="{% url 'checkout' %}" class="btn btn-primary">Checkout</a>
+            <br>
         </div>
             </div>
-                </div>    
+            </div>
+            </div>
+                 
         {% else %}
         <div class="col-md-8 text-center">
             

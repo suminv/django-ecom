@@ -60,3 +60,52 @@ class ShippingForm(forms.ModelForm):
             "shipping_country",
         ]
         exclude = ["user"]
+
+
+class PaymentForm(forms.Form):
+    cart_name = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Name On Cart"}),
+        required=True,
+    )
+    cart_number = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Cart Number"}),
+        required=True,
+    )
+    cart_exp_date = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Expiration Date"}),
+        required=True,
+    )
+    cart_cvv_number = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "CVV Code"}),
+        required=True,
+    )
+    cart_address1 =forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Billing Address 1"}),
+        required=True,
+    )
+    cart_address2 =forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Billing Address 2"}),
+        required=False,
+    )
+    cart_city = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Billing City"}),
+        required=True,
+    )
+    cart_zipcode =forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Billing Zipcode"}),
+        required=True,
+    )
+    cart_country =forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Billing Country"}),
+        required=True,
+    )
+
