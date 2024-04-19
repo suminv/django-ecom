@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from cart.cart import Cart
 from payment.forms import ShippingForm, PaymentForm
-from payment.models import ShipppingAddres
+from payment.models import ShipppingAddres, Order, OrderItem
+from django.contrib.auth.models import User
 from django.contrib import messages
 
 
@@ -53,6 +54,12 @@ def billing_info(request):
         cart_products = cart.get_prods
         quantities = cart.get_quants
         totals = cart.get_totals()
+
+        # Create a session with Shipping Info
+        my_shipping = request.POST
+        request.session['my_shipping'] = my_shipping
+
+
         if request.user.is_authenticated:
             billing_form = PaymentForm()
             return render(request, "payment/billing_info.html", {"cart_products": cart_products, "quantities": quantities, "totals": totals, "shipping_info": request.POST, "billing_form": billing_form})
@@ -68,3 +75,49 @@ def billing_info(request):
     else:
         messages.success(request, 'Access Denied.')
         return redirect('home')
+
+
+
+def process_order(request):
+    if request.POST:
+        # Get the cart
+        cart = Cart(request)
+        cart_products = cart.get_prods
+        quantities = cart.get_quants
+        totals = cart.get_totals()
+
+        # Get Billing Info from the last page
+        payment_form = PaymentForm(request.POST or None)
+        # Get Shipping Session Data
+        my_shipping = request.session.get('my_shipping')
+
+        # Gather Order Info
+        full_name = my_shipping['shipping_full_name']
+        email = my_shipping['shipping_email']
+        
+
+        # Create Shipping Address from session info
+        shipping_address = f"{my_shipping['shipping_address1']}\n{my_shipping['shipping_address2']}\n{my_shipping['shipping_city']}\n{my_shipping['shipping_zipcode']}\n{my_shipping['shipping_country']}"
+        
+        amount_paid = totals
+
+        # Create Order
+        if request.user.is_authenticated:
+            user = request.user
+            create_order = Order.objects.create(user=user, full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
+            create_order.save()
+            messages.success(request, 'Order Placed Successfully')
+            return redirect('home')
+        else:
+            create_order = Order.objects.create(full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
+            create_order.save()
+            messages.success(request, 'Order Placed Successfully')
+            return redirect('home')
+
+    else:
+        messages.success(request, 'Access Denied.')
+        return redirect('home')
+
+
+        
+    
