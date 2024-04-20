@@ -4,9 +4,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.decorators import login_required
+from django.db.models import Avg, Count
 
-from .forms import ChangePasswordForm, SignUpForm, UpdateUserForm, UserInfoForm
-from .models import Category, Product, Profile
+from .forms import ChangePasswordForm, ReviewForm, SignUpForm, UpdateUserForm, UserInfoForm
+from .models import Category, Product, Profile, Review
 from payment.models import ShipppingAddres
 from payment.forms import ShippingForm
 
@@ -135,8 +137,14 @@ def update_info(request):
 
 
 def product_detail(request, slug):
-    product = Product.objects.get(slug=slug)
-    return render(request, "store/product_detail.html", {"product": product})
+    product = get_object_or_404(Product, slug=slug)
+    review = Review.objects.filter(product=product)
+    total_review = review.count()
+    average_rating = review.aggregate(Avg("rating"))["rating__avg"]
+    my_range = range(1, 6)
+    # average_star = '*' * int(average_rating)
+    return render(request, "store/product_detail.html", {"product": product, "review": review, "total_review": total_review, "average_rating": average_rating, "my_range": my_range})
+
 
 
 def category_products(request, slug):
@@ -165,3 +173,31 @@ def search(request):
             return render(request, "store/search.html", {"searched": searched})
     else:
         return render(request, "store/search.html", {})
+
+@login_required
+def add_review(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    
+    if request.method =='POST':
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.user = request.user
+            review.save()
+            messages.success(request, "Review added successfully")
+            return redirect('product_detail', slug=slug)
+    else:
+        form = ReviewForm() 
+    return render(request, 'store/add_review.html', {'form': form, 'product': product})
+
+
+
+def all_reviews(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    reviews = Review.objects.filter(product=product)
+    if reviews:
+        return render(request, 'store/all_reviews.html', {'reviews': reviews, 'product': product})
+    else:
+        messages.error(request, "No reviews found") 
+        return redirect('home')

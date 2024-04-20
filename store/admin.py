@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Customer, Order, Profile
+from .models import Category, Product, Customer, Order, Profile, Review
 from django.contrib.auth.models import User
 
 
@@ -19,6 +19,7 @@ admin.site.register(Customer)
 admin.site.register(Order)
 admin.site.register(Profile)
 
+
 class ProfileInline(admin.StackedInline):
     # Mix profile info and user infomation
     model = Profile
@@ -34,3 +35,9 @@ admin.site.unregister(User)
 
 # Re - register the new way
 admin.site.register(User, UserAdmin)
+
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['product', 'user', 'review_message', 'data_time_stamp']
+    readonly_fields = ['data_time_stamp']  # Указываем, что это поле только для чтения
+
+admin.site.register(Review, ReviewAdmin)

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Review</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Please add review here</p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <center>
+            <div class="col-md-6 ">
+                <br>
+                  <br>
+                  <br>
+                  <br>
+                  <h2>Review for {{ product.name }}</h2>
+                  <br>
+                  <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                  <br>
+                  <br>
+
+                  <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Submit Review</button>
+                </form>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+            </div>
+            
+        </center>
+    </div>
+
+</div>
+
+{% endblock content %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Review</title>
+    <!-- Add any necessary CSS or styling links here -->
+</head>
+
+<body>
+    <h1>Add Review</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Review</button>
+    </form>
+</body>
+
+</html>
+
+
+
+
+
+
+

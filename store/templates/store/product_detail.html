@@ -13,12 +13,31 @@
         <center>
             <div class="col-8">
                 <p align="justify">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card" style="width: 25rem;">
                         <img src="{{product.image.url}}" class="card-img-top" alt="...">
                         <div class="card-body">
                             
 
                           <h5 class="card-title">{{product.name}}</h5>
+                          <br>
+                            <p class="card-text">Total Review: {{ total_review }}</p>
+                            {% if average_rating > 1 %}
+                            <p class="card-text">Average Rating:
+                              
+                              
+                              {% for i in my_range %}
+                                  {% if i <= average_rating %}
+                                      <i class="bi bi-star-fill text-warning"></i>
+                                  {% else %}
+                                      <i class="bi bi-star text-warning"></i>
+                                  {% endif %}
+                              {% endfor %}
+                              ({{ average_rating }})
+                          {% endif %}
+
+                            </p>
+                            <a href="{% url 'all_reviews' product.slug %}" class="btn btn-primary">See All Reviews</a>
+                            <br><br>
                           {% if product.is_sale %}
                             <div class="badge bg-light text-black position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
                           <!-- Stars showing-->
@@ -28,17 +47,18 @@
                             <div class="bi-star-fill"></div>
                             
                         </div>
+                        <br>
                           <strike>€{{product.price}}</strike>
                                             &nbsp;
-                                            €{{product.sale_price}}      
+                                            €{{product.sale_price}}  <br>    
 
-
+                        
                           {%else%}
                           <h5 class="card-title">€{{product.price}}</h5>
                           
                           {% endif %}
                           
-
+                            <br>
                           <p class="card-text">{{product.description}}</p>
                           <br>
                           <div class="row justify-content-center">
@@ -56,6 +76,8 @@
                       <br> 
                           <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
                           <button type="button" value="{{product.id}}" class="btn btn-secondary" id="add-cart">Add to cart</button>
+                          <a href="{% url 'add_review' product.slug %}" class="btn btn-secondary">Add Review</a>
+                          
                         </div>
                       </div>
                 </p>

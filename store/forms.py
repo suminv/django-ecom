@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
 from django.contrib.auth.models import User
 
-from store.models import Profile
+from store.models import Profile, Review
 
 
 class UserInfoForm(forms.ModelForm):
@@ -177,3 +177,36 @@ class SignUpForm(UserCreationForm):
         self.fields["password2"].help_text = (
             '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
         )
+
+
+class ReviewForm(forms.ModelForm):
+    RATING_CHOICES = [(i, str(i)) for i in range(1, 6)]
+
+
+    review_subject = forms.CharField(
+        label="",
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Subject"}
+        ),
+    )
+    review_message = forms.CharField(
+        label="", max_length=1000, widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Review"})
+    )
+    review_photo = forms.ImageField(
+        label="",
+        required=False,
+        widget=forms.FileInput(attrs={"class": "form-control", "placeholder": "Photo"}),
+    )
+    rating = forms.ChoiceField(
+        label="",
+        choices=RATING_CHOICES,
+        widget=forms.Select(attrs={"class": "form-control", "placeholder": "Rating"}),
+    )
+
+
+
+    class Meta:
+        model = Review
+        fields = ['review_subject', 'review_message', 'review_photo', 'rating']
+        

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Reviews</h1>
+            <p class="lead fw-normal text-white-50 mb-0">{{ product.name }}</p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <br>
+    {% for review in reviews %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ review.review_subject }}</h5>
+                <p class="card-text">{{ review.review_message }}</p>
+                <p class="card-text"><strong>Rating:</strong> 
+                    
+
+                    {% if review.rating == 1 %}
+                        
+                        <i class="bi bi-star-fill text-warning"></i>
+                        ({{ review.rating }})   
+
+                        {% elif review.rating == 2 %}
+                        
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        ({{ review.rating }})   
+                        {% elif review.rating == 3 %}
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        ({{ review.rating }})   
+                        {% elif review.rating == 4 %}
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        ({{ review.rating }})   
+                        {% elif review.rating == 5 %}
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        ({{ review.rating }})   
+                        
+                    
+                {% else %}
+                    No rating
+                {% endif %}
+                </p>
+                <p class="card-text"><strong>User:</strong> {{ review.user }}</p>
+                <p class="card-text"><strong>Date:</strong> {{ review.data_time_stamp }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="text-left mt-4">
+        <a href="#" class="btn btn-secondary" onclick="history.back()">Back</a>
+    </div>
+</div>
+<br>
+
+
+
+{% endblock %}
