@@ -195,7 +195,7 @@ def add_review(request, slug):
 
 def all_reviews(request, slug):
     product = get_object_or_404(Product, slug=slug)
-    reviews = Review.objects.filter(product=product)
+    reviews = Review.objects.filter(product=product).order_by('-data_time_stamp')
     if reviews:
         return render(request, 'store/all_reviews.html', {'reviews': reviews, 'product': product})
     else:
