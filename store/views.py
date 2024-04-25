@@ -176,6 +176,16 @@ def search(request):
 
 @login_required
 def add_review(request, slug):
+    """
+    Adds a review for a product.
+
+    Parameters:
+        request (HttpRequest): The HTTP request object.
+        slug (str): The slug of the product.
+
+    Returns:
+        HttpResponse: The response object.
+    """
     product = get_object_or_404(Product, slug=slug)
     
     if request.method =='POST':
@@ -194,6 +204,16 @@ def add_review(request, slug):
 
 
 def all_reviews(request, slug):
+    """
+    Retrieves all reviews for a given product and renders them in the 'store/all_reviews.html' template.
+    
+    Args:
+        request (HttpRequest): The HTTP request object.
+        slug (str): The slug of the product.
+        
+    Returns:
+        HttpResponse: The rendered 'store/all_reviews.html' template with the reviews and product information.
+    """
     product = get_object_or_404(Product, slug=slug)
     reviews = Review.objects.filter(product=product).order_by('-data_time_stamp')
     if reviews:
@@ -201,3 +221,5 @@ def all_reviews(request, slug):
     else:
         messages.error(request, "No reviews found") 
         return redirect('home')
+    
+    
