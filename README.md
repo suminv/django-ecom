@@ -6,7 +6,7 @@ An online store is a platform designed for buying and selling goods and services
 ### Installation and Running the Project:
 ### 1. Clone the repository:
 
-`git clone`
+`git clone https://github.com/suminv/django-ecom.git`
 
 
 ### 2. Install and create a virtual environment:
