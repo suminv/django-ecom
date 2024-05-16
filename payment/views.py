@@ -1,3 +1,4 @@
+from re import T
 from django.shortcuts import render, redirect
 from cart.cart import Cart
 from payment.forms import ShippingForm, PaymentForm
@@ -5,6 +6,26 @@ from payment.models import ShipppingAddres, Order, OrderItem
 from django.contrib.auth.models import User
 from django.contrib import messages
 from store.models import Product
+
+
+def shipping_dashboard(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        # Проверяем значение переключателя
+        show_shipping = request.GET.get('show_shipping')
+
+        if show_shipping == 'true':
+            orders = Order.objects.filter(shipped=True)
+            messages.success(request, 'Choice Orders Shipped')
+        elif show_shipping == 'false':
+            orders = Order.objects.filter(shipped=False)
+            messages.success(request, 'Choice Orders Not Shipped')
+        else:
+            orders = []  # Инициализируем пустой список для заказов
+
+        return render(request, "payment/shipping_dashboard.html", {'orders': orders})
+    else:
+        messages.success(request, 'Access Denied.')
+        return redirect('home')
 
 
 def payment_success(request):

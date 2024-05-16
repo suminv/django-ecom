@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Shipping Dashboard</h1>
+
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5 my-5">
+    <p><b>Please make a choice:</b></p>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onclick="window.location.href='?show_shipping=true'">
+        <label class="form-check-label" for="flexRadioDefault1">
+            Shipping Orders
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onclick="window.location.href='?show_shipping=false'">
+        <label class="form-check-label" for="flexRadioDefault2">
+            Not Shipped Orders
+        </label>
+    </div>
+    <br><br>
+    {% if request.GET.show_shipping %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">User</th>
+                <th scope="col">Email</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date Order</th>
+                <th scope="col">Date Shipping</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <th scope="row">{{ order.id }}</th>
+                <td>{{ order.full_name }}</td>
+                <td>{{ order.email }}</td>
+                <td>{{ order.amount_paid }}</td>
+                <td>{{ order.date_ordered }}</td>
+                <td>{{ order.date_shipped }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+
+{% endblock content %}
