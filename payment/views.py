@@ -15,10 +15,10 @@ def shipping_dashboard(request):
 
         if show_shipping == 'true':
             orders = Order.objects.filter(shipped=True)
-            messages.success(request, 'Choice Orders Shipped')
+            messages.success(request, 'Choiced Orders Shipped')
         elif show_shipping == 'false':
             orders = Order.objects.filter(shipped=False)
-            messages.success(request, 'Choice Orders Not Shipped')
+            messages.success(request, 'Choiced Orders Not Shipped')
         else:
             orders = []  # Инициализируем пустой список для заказов
 
