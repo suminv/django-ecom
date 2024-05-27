@@ -41,7 +41,7 @@
         <tbody>
             {% for order in orders %}
             <tr>
-                <th scope="row">{{ order.id }}</th>
+                <td><a href="{% url 'orders' order.id %}">{{ order.id }}</a></td>
                 <td>{{ order.full_name }}</td>
                 <td>{{ order.email }}</td>
                 <td>{{ order.amount_paid }}</td>

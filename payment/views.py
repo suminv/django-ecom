@@ -1,4 +1,3 @@
-from re import T
 from django.shortcuts import render, redirect
 from cart.cart import Cart
 from payment.forms import ShippingForm, PaymentForm
@@ -6,6 +5,18 @@ from payment.models import ShipppingAddres, Order, OrderItem
 from django.contrib.auth.models import User
 from django.contrib import messages
 from store.models import Product
+
+
+def orders(request, pk):
+    if request.user.is_authenticated and request.user.is_superuser:
+        order = Order.objects.get(id=pk)
+        order_items = OrderItem.objects.filter(order=pk)
+
+        return render(request, "payment/orders.html", {'order': order, 'order_items': order_items})
+
+    else:
+        messages.success(request, 'Access Denied.')
+        return redirect('home')
 
 
 def shipping_dashboard(request):
