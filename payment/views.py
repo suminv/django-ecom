@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from cart.cart import Cart
 from payment.forms import ShippingForm, PaymentForm
 from payment.models import ShipppingAddres, Order, OrderItem
@@ -7,16 +8,39 @@ from django.contrib import messages
 from store.models import Product
 
 
+from django.shortcuts import get_object_or_404, render, redirect
+from django.utils import timezone
+from django.contrib import messages
+from .models import Order, OrderItem
+
 def orders(request, pk):
     if request.user.is_authenticated and request.user.is_superuser:
-        order = Order.objects.get(id=pk)
+        order = get_object_or_404(Order, id=pk)
         order_items = OrderItem.objects.filter(order=pk)
+
+        if request.method == 'POST':
+            status = request.POST.get('shipping_status')
+            now = timezone.now()
+
+            if status == 'True':
+                order.shipped = True
+                order.date_shipped = now
+                order.save()
+                messages.success(request, 'Order marked as shipped')
+            else:
+                order.shipped = False
+                order.date_shipped = None  # Optionally reset the date shipped
+                order.save()
+                messages.success(request, 'Order marked as not shipped')
+            
+            return redirect('home')
 
         return render(request, "payment/orders.html", {'order': order, 'order_items': order_items})
 
     else:
-        messages.success(request, 'Access Denied.')
+        messages.error(request, 'Access Denied.')
         return redirect('home')
+
 
 
 def shipping_dashboard(request):

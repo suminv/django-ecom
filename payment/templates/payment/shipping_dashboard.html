@@ -36,6 +36,7 @@
                 <th scope="col">Amount</th>
                 <th scope="col">Date Order</th>
                 <th scope="col">Date Shipping</th>
+                <th scope="col">Shipping Status</th>
             </tr>
         </thead>
         <tbody>
@@ -47,6 +48,11 @@
                 <td>{{ order.amount_paid }}</td>
                 <td>{{ order.date_ordered }}</td>
                 <td>{{ order.date_shipped }}</td>
+                {% if order.shipped %}
+                <td>Shipped</td>
+                {% else %}
+                <td>Not Shipped</td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
