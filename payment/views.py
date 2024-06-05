@@ -5,8 +5,7 @@ from payment.forms import ShippingForm, PaymentForm
 from payment.models import ShipppingAddres, Order, OrderItem
 from django.contrib.auth.models import User
 from django.contrib import messages
-from store.models import Product
-
+from store.models import Product, Profile
 
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
@@ -151,11 +150,11 @@ def process_order(request):
         # Gather Order Info
         full_name = my_shipping['shipping_full_name']
         email = my_shipping['shipping_email']
-        
+
 
         # Create Shipping Address from session info
         shipping_address = f"{my_shipping['shipping_address1']}\n{my_shipping['shipping_address2']}\n{my_shipping['shipping_city']}\n{my_shipping['shipping_zipcode']}\n{my_shipping['shipping_country']}"
-        
+
         amount_paid = totals
 
         # Create Order
@@ -177,16 +176,21 @@ def process_order(request):
                 else:
                     price = product.price
                 # Get product quantity
-                for key,value in quantities().items():
+                for key, value in quantities().items():
                     if int(key) == product.id:
                         # Create order item
                         create_order_item = OrderItem(order_id=order_id, product_id=product_id, user=user, quatity=value, price=price)
                         create_order_item.save()
 
                 # Empty cart
-                for key in list(request.session.keys()):
-                    if key == 'session_key':
-                        del request.session[key]
+            for key in list(request.session.keys()):
+                if key == 'session_key':
+                    del request.session[key]
+            # Delete Cart from Database (old_cart field)
+            current_user = Profile.objects.filter(user__id=request.user.id)
+            # Delete shopping cart in database (old_cart field)
+            current_user.update(old_cart="")
+
 
             messages.success(request, 'Order Placed Successfully')
             return redirect('home')
@@ -214,7 +218,7 @@ def process_order(request):
             for key in list(request.session.keys()):
                 if key == 'session_key':
                     del request.session[key]
-                    
+
             messages.success(request, 'Order Placed Successfully')
             return redirect('home')
 
@@ -223,5 +227,4 @@ def process_order(request):
         return redirect('home')
 
 
-        
-    
+
